@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <circle cx="250" cy="250" r="245" fill="black" stroke="#A7A9AC" stroke-width="2"/>
+  
+  <g transform="translate(250, 250)">
+    <path d="M 0,0 L 0,-160 A 160,160 0 0,1 160,0 Z" fill="white"/>
+    <path d="M 0,0 L 160,0 A 160,160 0 0,1 0,160 Z" fill="#008AD1"/>
+    <path d="M 0,0 L 0,160 A 160,160 0 0,1 -160,0 Z" fill="white"/>
+    <path d="M 0,0 L -160,0 A 160,160 0 0,1 0,-160 Z" fill="#008AD1"/>
+    <circle r="160" fill="none" stroke="black" stroke-width="1"/>
+  </g>
+
+  <path id="curve" fill="none" d="M 110,250 A 140,140 0 1,1 390,250" />
+  <text fill="white" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="75">
+    <textPath href="#curve" startOffset="11%">B</textPath>
+    <textPath href="#curve" startOffset="42%">M</textPath>
+    <textPath href="#curve" startOffset="76%">W</textPath>
+  </text>
+</svg>
