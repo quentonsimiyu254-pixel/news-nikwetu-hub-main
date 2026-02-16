@@ -5,13 +5,35 @@ import type { Database } from './types';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
-// Import the supabase client like this:
-// import { supabase } from "@/integrations/supabase/client";
+// Helpful message when environment variables are missing
+const MISSING_MSG =
+  'Supabase environment variables are missing. Add VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY to your .env (or system env) and restart the dev server.';
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: {
-    storage: localStorage,
-    persistSession: true,
-    autoRefreshToken: true,
-  }
-});
+// Always declare the symbol and export it at the bottom to satisfy TS imports
+let supabase: any;
+
+if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+  // Log clear instructions for developers
+  // eslint-disable-next-line no-console
+  console.error('supabase client not initialized:', MISSING_MSG);
+
+  // Provide a proxy that throws when used to surface a clear error
+  supabase = new Proxy({}, {
+    get() {
+      return () => {
+        throw new Error(MISSING_MSG);
+      };
+    },
+  });
+} else {
+  // Create the real client when env vars are present
+  supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+    auth: {
+      storage: localStorage,
+      persistSession: true,
+      autoRefreshToken: true,
+    },
+  });
+}
+
+export { supabase };
